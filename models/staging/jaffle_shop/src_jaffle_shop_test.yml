@@ -1,0 +1,22 @@
+version: 2
+
+models:
+  - name: ref_jaffle_customers
+    columns:
+      - name: id
+        tests:
+        - unique
+        - not_null
+  - name: ref_jaffle_orders
+    columns:
+      - name: status
+        tests:
+         - accepted_values:
+              values: ['shipped','completed','return_pending','returned','placed']
+
+    
+
+
+      
+        
+
