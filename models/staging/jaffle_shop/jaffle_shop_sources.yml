@@ -6,7 +6,19 @@ sources:
     schema: jaffle_shop
     tables:
       - name: customers
+        columns:
+          - name: id
+            tests:
+             - not_null
+             - unique
+          
+
       - name: orders
+        columns:
+          - name: status
+            tests:
+             - accepted_values:
+                values: ['shipped','completed','return_pending','returned','placed'] 
         freshness:
          warn_after:
           count: 6
@@ -15,6 +27,7 @@ sources:
           count: 4
           period: day
         loaded_at_field: _ETL_LOADED_AT
+          
 
       
       
