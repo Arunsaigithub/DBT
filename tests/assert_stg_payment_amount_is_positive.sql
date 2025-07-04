@@ -9,4 +9,4 @@ from paytment
 group by
     order_id
 having
-     total_amount > 0
+     total_amount < 0
