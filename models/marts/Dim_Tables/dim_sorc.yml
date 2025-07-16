@@ -1,0 +1,138 @@
+version: 2
+models:
+ 
+ - name: Dim_doctors
+   description: "This dimension table contains doctor profiles, including specialization, contact details, and hospital branch."
+   columns:
+     - name: doctor_id
+       description: "Primary key"
+       tests:
+         - not_null
+         - unique
+     - name: first_name
+       description: "First name"
+       tests:
+         - not_null
+     - name: last_name
+       description: "Last name"
+       tests:
+         - not_null
+     - name: specialization
+       description: "Medical specialization"
+       tests:
+         - not_null
+         - accepted_values:
+            values: ['Dermatology','Pediatrics','Oncology']
+     - name: phone_number
+       description: "Contact number"
+  
+     - name: years_experience
+       description: "Years of experience"
+       tests:
+         - not_null
+     - name: hospital_branch
+       description: "Branch location"
+       tests:
+         - not_null
+         - accepted_values:
+            values: ['Westside Clinic','Eastside Clinic','Central Hospital']
+     - name: email
+       description: "Email address"
+       tests:
+         - test_email_doc
+     - name: last_updated_date
+       description: "Timestamp of last update"
+       tests:
+         - not_null
+
+ - name: Dim_patients
+   description: "This dimension table stores Slowly Changing Dimension Type 2 (SCD2) patient records, including demographics, contact, and insurance information."
+   columns:
+     - name: SK_Patient
+       description: "Unique key for each version"
+       tests:
+         - not_null
+         - unique
+     - name: patient_id
+       description: "Business key"
+       tests:
+         - not_null
+     - name: first_name
+       description: "Patient's first name"
+       tests:
+         - not_null
+     - name: last_name
+       description: "Patient's last name"
+       tests:
+         - not_null
+     - name: gender
+       description: "Gender"
+       tests:
+         - not_null
+         - accepted_values:
+            values: ['M','F']
+     - name: date_of_birth
+       description: "DOB"
+       tests:
+         - not_null
+     - name: contact_number
+       description: "Phone number "
+     - name: address
+       description: "Address"
+       tests:
+         - not_null
+     - name: insurance_provider
+       description: "Insurance company "
+       tests:
+         - not_null
+     - name: insurance_number
+       description: "Insurance ID"
+       tests:
+         - not_null
+     - name: email
+       description: "Email address"
+       tests:
+         - test_email_pat
+     - name: registration_date
+       description: "First registration date"
+       tests:
+         - not_null
+     - name: effective_start_date
+       description: "SCD2 start date"
+       tests:
+         - not_null
+     - name: effective_end_date
+       description: "SCD2 end date"
+     - name: is_current
+       description: "Flag for current record (Y/N)"
+       tests:
+         - not_null
+         - accepted_values:
+            values: ['Y','N']
+       
+ - name: Dim_treatments
+   description: "This dimension table stores details about treatment types including descriptions, derived cost ranges, and update timestamps."
+   columns:
+     - name: treatment_id
+       description: "unique key identifier"
+       tests:
+         - not_null
+         - unique
+     - name: treatment_type
+       description: "e.g., MRI, ECG, Chemotherapy"
+       tests:
+         - not_null
+         - accepted_values:
+            values: ['Chemotherapy','X-Ray','ECG','MRI','Physiotherapy']
+     - name: description
+       description: "Description of the treatment"
+       tests:
+         - not_null
+     - name: cost_range
+       description: "Derived: min-max cost for type"
+       tests:
+         - not_null
+     - name: last_updated
+       description: "Timestamp of last update"
+       tests:
+         - not_null
