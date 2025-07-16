@@ -1,7 +1,9 @@
 {{
     config(
         materialized = 'table',
-        schema='Dim_tables'
+        schema='Dim_tables',
+        tags = 'patients'
+       
     )
 }}
 select 

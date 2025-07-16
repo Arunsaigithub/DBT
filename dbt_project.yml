@@ -38,8 +38,6 @@ models:
   my_new_project:
     +post-hook:
       - "{{ ctrl_log_model('HOSPITAL.CONTROL_T.CTRL_TAB') }}"
-    staging:
-      +materialized: table
- 
+   
 on-run-end:
     - "{{ctrl_log_results(results, control_table='HOSPITAL.CONTROL_T.CTRL_TAB')}}"

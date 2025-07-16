@@ -1,6 +1,8 @@
 {{
     config(
-        schema ='Transformation'
+        schema ='Transformation',
+        tags = 'patients'
+     
     )
 }}
 select

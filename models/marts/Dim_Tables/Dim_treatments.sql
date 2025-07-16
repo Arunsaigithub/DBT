@@ -2,7 +2,8 @@
     config(
         materialized='incremental',
         unique_key='treatment_id',
-        schema = 'Dim_tables'
+        schema = 'Dim_tables',
+        tags = 'treatments'
     ) 
 }}
 with A as (
