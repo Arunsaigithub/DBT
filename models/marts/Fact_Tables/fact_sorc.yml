@@ -1,0 +1,106 @@
+version: 2
+models:
+ - name: Fact_appointments
+   description: "Fact table capturing individual patient appointments, including timing, purpose, and appointment status."
+   columns:
+     - name: appointment_key
+       description: "Primary key"
+       tests:
+         - not_null
+         - unique
+     - name: patient_key
+       tests:
+         - not_null
+       description: "FK to DimPatient"
+     - name: doctor_key
+       description: "Doctor identifier"
+       tests:
+         - not_null
+     - name: appointment_date
+       description: "Date of appointment"
+       tests:
+         - not_null
+     - name: appointment_time
+       description: "Time of appointment"
+       tests:
+         - not_null
+     - name: reason_for_visit
+       description: "Reason (Checkup, Emergency, etc.)"
+       tests:
+         - accepted_values:
+             values: ['Therapy','Consultation','Follow-up','Emergency','Checkup']
+     - name: status
+       description: "Scheduled, Completed, Cancelled, etc."
+       tests:
+        - not_null
+        - accepted_values:
+            values: ['Scheduled','No-show','Cancelled', 'Completed']
+
+ - name: Fact_billing
+   description: "Fact table recording billing events linked to patients and treatments, including amount and payment status."
+   columns:
+     - name: bill_key
+       description: "Primary key"
+       tests:
+         - not_null
+         - unique
+     - name: patient_key
+       description: "FK to DimPatient"
+       tests:
+         - not_null
+     - name: treatment_key
+       description: "Treatment reference"
+       tests:
+         - not_null
+     - name: bill_date
+       description: "Date of billing"
+       tests:
+         - not_null
+     - name: amount
+       description: "Amount billed"
+       tests:
+         - not_null
+     - name: payment_method
+       description: "Cash, Insurance, etc."
+       tests:
+        - not_null
+        - accepted_values:
+            values: ['Cash', 'Insurance', 'Credit Card']
+     - name: payment_status
+       description: "Paid, Pending, Failed"
+       tests:
+         - accepted_values:
+            values: ['Paid','Pending','Failed']
+       
+ - name: FactPatientActivity
+   description: "Aggregated fact table summarizing patient activity metrics including appointments, billing totals, and no-show data."
+   columns:
+     - name: patient_key
+       description: "FK to DimPatient"
+       tests:
+         - not_null
+         - unique
+     - name: total_appointments
+       description: "Count of appointments"
+       tests:
+         - not_null
+     - name: total_billed
+       description: "Sum of billing amount"
+       tests:
+         - not_null
+     - name: total_paid
+       description: "Sum of successful payments"
+       tests:
+         - not_null
+     - name: no_show_count
+       description: "Count of no-shows"
+       tests:
+         - not_null
+     - name: first_appointment_date
+       description: "First appointment date"
+       tests:
+         - not_null
+     - name: last_appointment_date
+       description: "Most recent appointment"
+       tests:
+         - not_null

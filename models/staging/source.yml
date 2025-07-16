@@ -1,0 +1,11 @@
+sources:
+  - name: src_hospital
+    database: Hospital
+    schema: public
+    tables:
+      - name: appointments
+      - name: BILLINGS
+      - name: doctors
+      - name: patients
+      - name: treatments
+      
