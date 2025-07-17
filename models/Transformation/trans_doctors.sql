@@ -5,7 +5,6 @@
     )
 }}
 select
-    concat('D_0', row_number() over (order by doctor_id)) as SK_doc,
     coalesce(doctor_id,'unknown') as doctor_id,
     coalesce(first_name,'unknown') as first_name,
     coalesce(last_name,'unknown') as last_name,
