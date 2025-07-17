@@ -3,11 +3,10 @@
         materialized = 'table',
         schema='Dim_tables',
         tags = 'patients'
-       
     )
 }}
 select 
-    SK_Patient,
+    concat('P_0', row_number() over (order by patient_id)) as SK_Patient,
     patient_id,
     first_name,
     last_name,
@@ -24,5 +23,5 @@ select
     case
         when DBT_VALID_TO is null then 'Y'
         else 'N'
-    end as is_current
+    end as is_current 
 from {{ ref('snapshot_pat') }}
